@@ -4,17 +4,15 @@
 
 ## Name .......................ID
 
-## 1.Abdellah Nuruhussein ....UGR/5973/17
+## 1.Abdulmalik Muhidin ......UGR/2859/17
 
-## 2.Abdulmalik Muhidin ......UGR/2859/17
+## 2.Abdunasir Hassen........ UGR/4133/17
 
-## 3.Abdunasir Hassen........ UGR/4133/17
+## 3.Alazr Wondifraw......... UGR/2894/17
 
-## 4.Alazr Wondifraw......... UGR/2894/17
+## 4.Amin Ahmed ..............UGR/6904/17
 
-## 5.Amin Ahmed ..............UGR/6904/17
-
-## 6.Aymen Muhammed.......... UGR/7906/17
+## 5.Aymen Muhammed.......... UGR/7906/17
 
 ## Title
 
