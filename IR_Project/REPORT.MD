@@ -8,7 +8,7 @@
 
 ## 2.Abdunasir Hassen........ UGR/4133/17
 
-## 3.Alazr Wondifraw......... UGR/2894/17
+## 3.Alazar Wondifraw......... UGR/2894/17
 
 ## 4.Amin Ahmed ..............UGR/6904/17
 
@@ -103,28 +103,51 @@ Documents are scored according to relevance to the query, and top results are re
 ---
 
 ## 5. Execution Process
+1.  **Block Parsing**: The collection is split into manageable "blocks" (e.g., 500 documents at a time) [cite: 12].
+2.  **ID Mapping**: Each unique term encountered is mapped to a `term_id`, and each document is mapped to a `doc_id`. This reduces the memory footprint by replacing long strings with integers [cite: 12].
+3.  **In-Memory Sorting**: For each block, the system generates a list of `(term_id, doc_id)` pairs. This list is sorted primarily by `term_id` and secondarily by `doc_id` [cite: 12].
+4.  **Local Inversion**: The sorted pairs are transformed into a local inverted list (a "postings list") for that specific block [cite: 12].
+5.  **Disk Write**: These blocks are saved as temporary binary files to disk [cite: 12].
+6.  **Multi-Way Merge**: The final step involves reading all temporary blocks simultaneously. The system uses a **Min-Heap** to efficiently merge these sorted lists into one final, global inverted index [cite: 12].
 
-The project was executed in the following stages:
+---
 
-### Step 1: Environment Setup
+## Python Module Deep Dive
 
-Python environment was prepared and required libraries installed.
+### A. `bsbi.py` (The Construction Engine)
+This script is responsible for transforming raw text into the search engine's "brain" [cite: 12].
 
-### Step 2: Data Preparation
+*   **Functionality**: Coordinates the block-based parsing and the final merge operation [cite: 12].
+*   **Execution Trace**:
+    *   Initialize the `term_dictionary` [cite: 12].
+    *   Process Documents $1 \to 500$, creating `block_0.bin` [cite: 12].
+    *   Process Documents $501 \to 1000$, creating `block_1.bin` [cite: 12].
+    *   Run the merge function to produce the final `index.bin` [cite: 12].
 
-The Cranfield dataset files were extracted and placed in the project folder.
+### B. `main.py` (The Retrieval & Evaluation Engine)
+This is the operational interface of the system, handling queries and performance benchmarking [cite: 12].
 
-### Step 3: Index Construction
+*   **Functionality**: It loads the index, processes queries using the **Vector Space Model**, and calculates accuracy against the `cranqrel` file [cite: 12].
+*   **Ranking Mechanism**: It calculates the **TF-IDF** (Term Frequency-Inverse Document Frequency) weights for terms and ranks documents based on **Cosine Similarity** [cite: 12].
 
-The BSBI algorithm processed all documents and created the inverted index.
+---
 
-### Step 4: Query Processing
+## Ranking Mathematics: The Vector Space Model
+The system does not just find documents that contain a word; it ranks them by relevance [cite: 12].
 
-Queries from the benchmark set were tokenized and submitted to the search engine.
+### TF-IDF Weighting
+Each term $t$ in document $d$ is assigned a weight $w$ to prioritize words that are frequent in a specific document but rare across the entire collection of $N$ documents [cite: 12]:
 
-### Step 5: Ranking
+$$w_{t,d} = \text{tf}_{t,d} \times \log\left(\frac{N}{\text{df}_t}\right)$$
 
-TF-IDF scores were calculated for matching documents.
+### Cosine Similarity
+To rank document $D$ against query $Q$, the system treats both as vectors in a high-dimensional space and calculates the cosine of the angle between them [cite: 12]:
+
+$$\text{score}(Q, D) = \frac{\sum Q_i D_i}{\sqrt{\sum Q_i^2} \sqrt{\sum D_i^2}}$$
+
+Documents with higher scores are returned at the top of the search results [cite: 12].
+
+---
 
 ### Step 6: Evaluation
 
