@@ -155,7 +155,7 @@ Retrieved results were compared with the benchmark relevance judgments.
 
 ---
 
-## 6. Evaluation Results
+## Evaluation Results
 
 The implemented system successfully indexed approximately:
 
